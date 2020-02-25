@@ -20,20 +20,11 @@ public class FamilyRelationInfo {
     // ===================================
     public void addParent(Person child, Person.Relations parentalRelation, Person parent) {
 
-        //ArrayList<Person> children = getChildren();
-        //children.add(child);
-        //setChildren(children);
-
-
         switch (parentalRelation) {
             case MOTHER:
-                //FamilyRelationInfo fri1 = new FamilyRelationInfo(child);
-                //fri1.setBiologicalMother(this.thisPerson);
                 child.getFamilyRelation().setBiologicalMother(this.thisPerson);
                 break;
             case FATHER:
-                //FamilyRelationInfo fri2 = new FamilyRelationInfo(child);
-                //fri2.setBiologicalFather(this.thisPerson);
                 child.getFamilyRelation().setBiologicalFather(this.thisPerson);
                 break;
             default:
@@ -46,12 +37,15 @@ public class FamilyRelationInfo {
         switch (status) {
             case SINGLE:
                 newMaritalStatus = new MaritalStatus(status, getThisPerson());
+                break;
             case COHABITATION:
             case MARRIED:
                 newMaritalStatus = new MaritalStatus(status, getThisPerson(), partnerOrSelf, 1);
+                break;
             case DIVORCED:
             case WIDOWED:
                 newMaritalStatus = new MaritalStatus(status, getThisPerson(), partnerOrSelf, -1);
+                break;
         }
         getMaritalStatusInfo().add(newMaritalStatus);
     }
