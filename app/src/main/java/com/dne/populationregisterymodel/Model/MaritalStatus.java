@@ -18,7 +18,6 @@ public class MaritalStatus {
         setStatusOrPartner(status, thisPerson, partner, flag);
     }
 
-
     // ===================================
     //            main functions
     // ===================================
@@ -40,7 +39,6 @@ public class MaritalStatus {
             }
         }
     }
-
 /*
     public void addLifePartner(Status status, Person thisPerson, Person partner) {
         this.setPartner(partner);
@@ -59,7 +57,6 @@ public class MaritalStatus {
         }
     }
 */
-
     // ===================================
     //   get/set functions for variables
     // ===================================

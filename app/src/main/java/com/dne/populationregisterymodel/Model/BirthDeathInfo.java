@@ -14,7 +14,6 @@ public class BirthDeathInfo {
         this.thisPerson = thisPerson;
     }
 
-
     // ===================================
     //            main functions
     // ===================================

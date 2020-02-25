@@ -1,10 +1,8 @@
 package com.dne.populationregisterymodel.Model;
 
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class PersonTest {
@@ -95,8 +93,10 @@ public class PersonTest {
     @Test
     public void addBirthDeathEvent_deathEvent_hasPartner_cohabitation() {
         SampleData sd = new SampleData();
-        MaritalStatus cohabitantToJohn = new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.john);
-        MaritalStatus cohabitantToJane = new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.jane);
+        MaritalStatus cohabitantToJohn =
+                new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.john);
+        MaritalStatus cohabitantToJane =
+                new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.jane);
         cohabitantToJohn.setPartner(sd.john);
         cohabitantToJane.setPartner(sd.jane);
         cohabitantToJohn.setStartDate("1980-01-01");
@@ -118,13 +118,31 @@ public class PersonTest {
     @Test
     public void getParentalRelationToChild_mother() {
         SampleData sd = new SampleData();
-        assertSame(Person.Relations.MOTHER, sd.jane.getParentalRelationToChild(sd.jane.getGender()));
+        assertSame(Person.Relations.MOTHER, sd.jane
+                .getParentalRelationToChild(sd.jane.getGender()));
     }
 
     @Test
     public void getParentalRelationToChild_father() {
         SampleData sd = new SampleData();
-        assertSame(Person.Relations.FATHER, sd.john.getParentalRelationToChild(sd.john.getGender()));
+        assertSame(Person.Relations.FATHER, sd.john
+                .getParentalRelationToChild(sd.john.getGender()));
     }
 
+    @Test
+    public void addCitizenship() {
+        SampleData sd = new SampleData();
+        sd.john.setCitizenshipInfo(new ArrayList<String>(Arrays.asList("Finland")));
+        sd.john.addCitizenship("USA");
+        assertSame("Finland", sd.john.getCitizenshipInfo().get(0));
+        assertSame("USA", sd.john.getCitizenshipInfo().get(1));
+    }
+
+    @Test
+    public void removeCitizenship() {
+        SampleData sd = new SampleData();
+        sd.john.setCitizenshipInfo(new ArrayList<String>(Arrays.asList("Finland" , "USA")));
+        sd.john.removeCitizenship("Finland");
+        assertSame("USA", sd.john.getCitizenshipInfo().get(0));
+    }
 }

@@ -1,9 +1,6 @@
 package com.dne.populationregisterymodel.Model;
 
-import android.util.Log;
-
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class MaritalStatusTest {
@@ -15,6 +12,5 @@ public class MaritalStatusTest {
         ms.setStatusOrPartner(MaritalStatus.Status.MARRIED,sd.john,sd.jane,1);
         assertSame(sd.john, ms.getThisPerson());
         assertSame(MaritalStatus.Status.MARRIED, ms.getRelationshipStatus());
-
     }
 }

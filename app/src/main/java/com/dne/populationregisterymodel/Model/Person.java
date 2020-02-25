@@ -1,7 +1,6 @@
 package com.dne.populationregisterymodel.Model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Person {
 
@@ -24,7 +23,6 @@ public class Person {
     public Person(Gender gender) {
         this.gender = gender;
     }
-
 
     // ===================================
     //            main functions
@@ -89,6 +87,15 @@ public class Person {
         return parentalRelation;
     }
 
+    public void addCitizenship(String citizenship) {
+        this.citizenshipInfo.add(citizenship);
+    }
+
+    public void removeCitizenship(String citizenship) {
+
+        this.citizenshipInfo.remove(citizenship);
+    }
+
     // ===================================
     //   get/set functions for variables
     // ===================================
@@ -140,14 +147,6 @@ public class Person {
         this.citizenshipInfo = citizenshipInfo;
     }
 
-    public void addCitizenship(String citizenship) {
-        this.citizenshipInfo.add(citizenship);
-    }
-
-    public void removeCitizenship(String citizenship) {
-        this.citizenshipInfo.remove(citizenship);
-    }
-
     public ArrayList<Address> getAddressInfo() {
         return this.addressInfo;
     }
@@ -171,7 +170,4 @@ public class Person {
     public void setBirthDeathInfo(BirthDeathInfo birthDeathInfo) {
         this.birthDeathInfo = birthDeathInfo;
     }
-
-
-
 }

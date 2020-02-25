@@ -1,10 +1,8 @@
 package com.dne.populationregisterymodel.Model;
 
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class BirthDeathInfoTest {
@@ -53,8 +51,10 @@ public class BirthDeathInfoTest {
     @Test
     public void addDeathEvent_hasPartner_cohabitation() {
         SampleData sd = new SampleData();
-        MaritalStatus cohabitantToJohn = new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.john);
-        MaritalStatus cohabitantToJane = new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.jane);
+        MaritalStatus cohabitantToJohn =
+                new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.john);
+        MaritalStatus cohabitantToJane =
+                new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.jane);
         cohabitantToJohn.setPartner(sd.john);
         cohabitantToJane.setPartner(sd.jane);
         cohabitantToJohn.setStartDate("1980-01-01");

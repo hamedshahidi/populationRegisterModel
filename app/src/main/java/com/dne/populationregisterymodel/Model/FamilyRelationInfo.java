@@ -40,11 +40,13 @@ public class FamilyRelationInfo {
                 break;
             case COHABITATION:
             case MARRIED:
-                newMaritalStatus = new MaritalStatus(status, getThisPerson(), partnerOrSelf, 1);
+                newMaritalStatus = new MaritalStatus(
+                        status, getThisPerson(), partnerOrSelf, 1);
                 break;
             case DIVORCED:
             case WIDOWED:
-                newMaritalStatus = new MaritalStatus(status, getThisPerson(), partnerOrSelf, -1);
+                newMaritalStatus = new MaritalStatus(
+                        status, getThisPerson(), partnerOrSelf, -1);
                 break;
         }
         getMaritalStatusInfo().add(newMaritalStatus);
