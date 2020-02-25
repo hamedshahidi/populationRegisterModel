@@ -1,12 +1,12 @@
 package com.dne.populationregisterymodel.Model;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 public class BirthDeathInfo {
 
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String placeOfBirth;
-    private Date dateOfDeath;
+    private String dateOfDeath;
     private String placeOfDeath;
     private Person thisPerson;
 
@@ -14,7 +14,38 @@ public class BirthDeathInfo {
         this.thisPerson = thisPerson;
     }
 
-    public Date getDateOfBirth() {
+
+    // ===================================
+    //            main functions
+    // ===================================
+    public void addBirthEvent(String date, String place) {
+        setDateOfBirth(date);
+        setPlaceOfBirth(place);
+    }
+
+    public void addDeathEvent(String date, String place) {
+        setDateOfDeath(date);
+        setPlaceOfDeath(place);
+        MaritalStatus lastStatus = null;
+        ArrayList<MaritalStatus> maritalInfo = getThisPerson().getFamilyRelation()
+                .getMaritalStatusInfo();
+        // changing marital status for partner
+        if (maritalInfo != null && !maritalInfo.isEmpty()) {
+            lastStatus = maritalInfo.get(maritalInfo.size() - 1);
+            switch (lastStatus.getRelationshipStatus()) {
+                case MARRIED:
+                case COHABITATION:
+                    lastStatus.getPartner().getFamilyRelation()
+                            .addNewMaritalStatus(MaritalStatus.Status.WIDOWED, getThisPerson());
+                    break;
+            }
+        }
+    }
+
+    // ===================================
+    //   get/set functions for variables
+    // ===================================
+    public String getDateOfBirth() {
         return this.dateOfBirth;
     }
 
@@ -22,7 +53,7 @@ public class BirthDeathInfo {
         return this.placeOfBirth;
     }
 
-    public Date getDateOfDeath() {
+    public String getDateOfDeath() {
         return this.dateOfDeath;
     }
 
@@ -34,7 +65,7 @@ public class BirthDeathInfo {
         return this.thisPerson;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -42,7 +73,7 @@ public class BirthDeathInfo {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public void setDateOfDeath(Date dateOfDeath) {
+    public void setDateOfDeath(String dateOfDeath) {
         this.dateOfDeath = dateOfDeath;
     }
 

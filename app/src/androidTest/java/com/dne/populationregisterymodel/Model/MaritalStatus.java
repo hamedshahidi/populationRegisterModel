@@ -1,43 +1,99 @@
 package com.dne.populationregisterymodel.Model;
 
-import java.util.Date;
-
 public class MaritalStatus {
 
     private Person partner;
-    private String relationshipStatus;
-    private Date startDate;
-    private Date endDate;
+    private Status relationshipStatus;
+    private String startDate;
+    private String endDate;
+    private Person thisPerson;
+
+    public enum Status {SINGLE, COHABITATION, MARRIED, DIVORCED, WIDOWED}
+
+    public MaritalStatus(Status status, Person thisPerson) {
+        setStatusOrPartner(status, thisPerson, null, 0);
+    }
+
+    public MaritalStatus(Status status, Person thisPerson, Person partner, int flag) {
+        setStatusOrPartner(status, thisPerson, partner, flag);
+    }
+
+
+    // ===================================
+    //            main functions
+    // ===================================
+    public void setStatusOrPartner(Status status, Person thisPerson, Person partner, int flag) {
+        setThisPerson(thisPerson);
+        setRelationshipStatus(status);
+        if (partner != null) {
+            switch (flag) {
+                case 1:
+                    addLifePartner(status, thisPerson, partner);
+                    break;
+                case -1:
+                    removeLifePartner(status, thisPerson, partner);
+                    break;
+            }
+        }
+    }
+
+    public void addLifePartner(Status status, Person thisPerson, Person partner) {
+        setPartner(partner);
+        partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
+        // TODO previous relation endDate
+    }
+
+    public void removeLifePartner(Status status, Person thisPerson, Person partner) {
+        switch (status) {
+            case DIVORCED:
+            case WIDOWED:
+                //TODO previous relation endDate
+                //thisPerson.getFamilyRelation().getLastMaritalStatusData().setEndDate(date);
+                //partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
+                break;
+        }
+    }
+
+    // ===================================
+    //   get/set functions for variables
+    // ===================================
+    public Person getThisPerson() {
+        return this.thisPerson;
+    }
 
     public Person getPartner() {
         return this.partner;
     }
 
-    public String getRelationshipStatus() {
+    public Status getRelationshipStatus() {
         return this.relationshipStatus;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return this.startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return this.endDate;
+    }
+
+    public void setThisPerson(Person thisPerson) {
+        this.thisPerson = thisPerson;
     }
 
     public void setPartner(Person partner) {
         this.partner = partner;
     }
 
-    public void setRelationshipStatus(String relationshipStatus) {
+    public void setRelationshipStatus(Status relationshipStatus) {
         this.relationshipStatus = relationshipStatus;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 }

@@ -1,7 +1,5 @@
 package com.dne.populationregisterymodel.Model;
 
-import java.util.Date;
-
 public class Address {
 
     private String country;
@@ -9,8 +7,8 @@ public class Address {
     private String city;
     private String street;
     private String postalCode;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
 
     public String getCountry() {
         return this.country;
@@ -32,11 +30,11 @@ public class Address {
         return this.postalCode;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return this.startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return this.endDate;
     }
 
@@ -60,11 +58,11 @@ public class Address {
         this.postalCode = postalCode;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 }
