@@ -70,7 +70,7 @@ public class PersonTest {
     }
 
     @Test
-    public void addBirthDeathEvent_deathEvent_AVIOLIITTO() {
+    public void addBirthDeathEvent_deathEvent_hasPartner_married() {
         SampleData sd = new SampleData();
         MaritalStatus marriedToJohn = new MaritalStatus(MaritalStatus.Status.MARRIED, sd.john);
         MaritalStatus marriedToJane = new MaritalStatus(MaritalStatus.Status.MARRIED, sd.jane);
@@ -93,20 +93,18 @@ public class PersonTest {
     }
 
     @Test
-    public void addBirthDeathEvent_deathEvent_AVOLIITTO() {
+    public void addBirthDeathEvent_deathEvent_hasPartner_cohabitation() {
         SampleData sd = new SampleData();
-        MaritalStatus marriedToJohn =
-                new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.john);
-        MaritalStatus marriedToJane =
-                new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.jane);
-        marriedToJohn.setPartner(sd.john);
-        marriedToJane.setPartner(sd.jane);
-        marriedToJohn.setStartDate("1980-01-01");
-        marriedToJane.setStartDate("1980-01-01");
+        MaritalStatus cohabitantToJohn = new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.john);
+        MaritalStatus cohabitantToJane = new MaritalStatus(MaritalStatus.Status.COHABITATION, sd.jane);
+        cohabitantToJohn.setPartner(sd.john);
+        cohabitantToJane.setPartner(sd.jane);
+        cohabitantToJohn.setStartDate("1980-01-01");
+        cohabitantToJane.setStartDate("1980-01-01");
         ArrayList<MaritalStatus> maritalInfoForJane =
-                new ArrayList<>(Arrays.asList(marriedToJohn));
+                new ArrayList<>(Arrays.asList(cohabitantToJohn));
         ArrayList<MaritalStatus> maritalInfoForJohn =
-                new ArrayList<>(Arrays.asList(marriedToJane));
+                new ArrayList<>(Arrays.asList(cohabitantToJane));
         sd.jane.getFamilyRelation().setMaritalStatusInfo(maritalInfoForJane);
         sd.john.getFamilyRelation().setMaritalStatusInfo(maritalInfoForJohn);
         sd.john.addBirthDeathEvent(Person.Events.DEATH, "2020-01-01", "Bermuda");
