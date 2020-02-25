@@ -28,31 +28,37 @@ public class MaritalStatus {
         if (partner != null) {
             switch (flag) {
                 case 1:
-                    addLifePartner(status, thisPerson, partner);
+                    // TODO (Refine) change logic for adding partner
+                    //  addLifePartner();
                     break;
                 case -1:
-                    removeLifePartner(status, thisPerson, partner);
+                    //TODO (Refine) change logic for removing partner
+                    //  removeLifePartner();
+                    break;
+                default:
                     break;
             }
         }
     }
 
+/*
     public void addLifePartner(Status status, Person thisPerson, Person partner) {
-        setPartner(partner);
+        this.setPartner(partner);
         partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
-        // TODO previous relation endDate
+        // TODO (Refine) change previous relation endDate
     }
 
     public void removeLifePartner(Status status, Person thisPerson, Person partner) {
         switch (status) {
             case DIVORCED:
             case WIDOWED:
-                //TODO previous relation endDate
+                //TODO (Refine) change previous relation endDate
                 //thisPerson.getFamilyRelation().getLastMaritalStatusData().setEndDate(date);
                 //partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
                 break;
         }
     }
+*/
 
     // ===================================
     //   get/set functions for variables
