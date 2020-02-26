@@ -22,41 +22,44 @@ public class MaritalStatus {
     //            main functions
     // ===================================
     public void setStatusOrPartner(Status status, Person thisPerson, Person partner, int flag) {
-        setThisPerson(thisPerson);
+        this.setThisPerson(thisPerson);
         setRelationshipStatus(status);
         if (partner != null) {
             switch (flag) {
                 case 1:
+                    setPartner(partner);
                     // TODO (Refine) change logic for adding partner
                     //  addLifePartner();
-                    break;
-                case -1:
-                    //TODO (Refine) change logic for removing partner
-                    //  removeLifePartner();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-/*
-    public void addLifePartner(Status status, Person thisPerson, Person partner) {
-        this.setPartner(partner);
-        partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
-        // TODO (Refine) change previous relation endDate
-    }
-
-    public void removeLifePartner(Status status, Person thisPerson, Person partner) {
-        switch (status) {
-            case DIVORCED:
-            case WIDOWED:
-                //TODO (Refine) change previous relation endDate
-                //thisPerson.getFamilyRelation().getLastMaritalStatusData().setEndDate(date);
-                //partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
+            break;
+            case -1:
+                //TODO (Refine) change logic for removing partner
+                //  removeLifePartner();
+                break;
+            default:
                 break;
         }
     }
-*/
+
+}
+
+    /*
+        public void addLifePartner(Status status, Person thisPerson, Person partner) {
+            this.setPartner(partner);
+            partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
+            // TODO (Refine) change previous relation endDate
+        }
+
+        public void removeLifePartner(Status status, Person thisPerson, Person partner) {
+            switch (status) {
+                case DIVORCED:
+                case WIDOWED:
+                    //TODO (Refine) change previous relation endDate
+                    //thisPerson.getFamilyRelation().getLastMaritalStatusData().setEndDate(date);
+                    //partner.getFamilyRelation().addNewMaritalStatus(status, thisPerson);
+                    break;
+            }
+        }
+    */
     // ===================================
     //   get/set functions for variables
     // ===================================

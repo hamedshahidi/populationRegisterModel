@@ -1,5 +1,7 @@
 package com.dne.populationregisterymodel.Model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class FamilyRelationInfo {
@@ -18,7 +20,7 @@ public class FamilyRelationInfo {
     // ===================================
     //            main functions
     // ===================================
-    public void addParent(Person child, Person.Relations parentalRelation, Person parent) {
+    public void setAsParentOfChild(Person child, Person.Relations parentalRelation, Person parent) {
 
         switch (parentalRelation) {
             case MOTHER:
@@ -34,9 +36,13 @@ public class FamilyRelationInfo {
 
     public void addNewMaritalStatus(MaritalStatus.Status status, Person partnerOrSelf) {
         MaritalStatus newMaritalStatus = null;
+        MaritalStatus personLastStatus =
+                getThisPerson().getFamilyRelation().getLastMaritalStatusData();
+        MaritalStatus partnerLastStatus =
+                partnerOrSelf.getFamilyRelation().getLastMaritalStatusData();
         switch (status) {
             case SINGLE:
-                newMaritalStatus = new MaritalStatus(status, getThisPerson());
+                newMaritalStatus = new MaritalStatus(status, partnerOrSelf);
                 break;
             case COHABITATION:
             case MARRIED:
@@ -49,7 +55,36 @@ public class FamilyRelationInfo {
                         status, getThisPerson(), partnerOrSelf, -1);
                 break;
         }
-        getMaritalStatusInfo().add(newMaritalStatus);
+
+        //TODO (toFix) bug in changing cohabitation/married partner status to single.
+        // Instead updates person status x2.
+        getThisPerson().getFamilyRelation().getMaritalStatusInfo().add(newMaritalStatus);
+
+
+        //Check and update marital status for partner if needed
+        switch (status) {
+            case MARRIED:
+            case COHABITATION:
+                partnerLastStatus = partnerOrSelf.getFamilyRelation().getLastMaritalStatusData();
+                if (partnerLastStatus.getPartner() != null
+                        && partnerLastStatus.getPartner() == getThisPerson()
+                        && partnerLastStatus.getRelationshipStatus() == status) {
+                    // status already registered for partner. Do nothing.
+                    break;
+                } else {
+                    partnerOrSelf.getFamilyRelation()
+                            .addNewMaritalStatus(status, getThisPerson());
+                }
+                break;
+            case SINGLE:
+                if (personLastStatus.getRelationshipStatus() == MaritalStatus.Status.COHABITATION) {
+                    Person partner = personLastStatus.getPartner();
+                    partnerOrSelf.getFamilyRelation()
+                            .addNewMaritalStatus(MaritalStatus.Status.SINGLE, partner);
+                }
+            default:
+                break;
+        }
     }
 
     public void addGuardian(Person guardian) {
@@ -57,8 +92,30 @@ public class FamilyRelationInfo {
     }
 
     // TODO store godChildren for guardian. Remove guardian from child in case of guardian's death.
-    public void removeGuardian(Person guardian) {
-        getGuardians().remove(guardian);
+    public void removeGuardian(Person guardian, Person child) {
+        child.getFamilyRelation().getGuardians().remove(guardian);
+    }
+
+    public MaritalStatus getLastMaritalStatusData() {
+        return getMaritalStatusInfo().get(getMaritalStatusInfo().size() - 1);
+    }
+
+    public boolean isMarried(Person person) {
+        MaritalStatus status = person.getFamilyRelation().getLastMaritalStatusData();
+        return (status.getRelationshipStatus() == MaritalStatus.Status.MARRIED);
+    }
+
+    public boolean isCohabitant(Person person) {
+        MaritalStatus status = person.getFamilyRelation().getLastMaritalStatusData();
+        return (status.getRelationshipStatus() == MaritalStatus.Status.COHABITATION);
+    }
+
+    public void chengesToMarried(Person person, MaritalStatus.Status newStatus) {
+        MaritalStatus status = person.getFamilyRelation().getLastMaritalStatusData();
+    }
+
+    public void changesToCohabitant(Person person) {
+        MaritalStatus status = person.getFamilyRelation().getLastMaritalStatusData();
     }
 
 
@@ -111,9 +168,5 @@ public class FamilyRelationInfo {
 
     public void setThisPerson(Person thisPerson) {
         this.thisPerson = thisPerson;
-    }
-
-    public MaritalStatus getLastMaritalStatusData() {
-        return getMaritalStatusInfo().get(getMaritalStatusInfo().size() - 1);
     }
 }

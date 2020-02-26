@@ -22,6 +22,9 @@ public class Person {
 
     public Person(Gender gender) {
         this.gender = gender;
+        this.getFamilyRelation().setThisPerson(this);
+        this.getFamilyRelation().getMaritalStatusInfo()
+                .add(new MaritalStatus(MaritalStatus.Status.SINGLE,this));
     }
 
     // ===================================
@@ -55,7 +58,7 @@ public class Person {
             case CHILD:
                 getFamilyRelation().getChildren().add(person);
                 getFamilyRelation()
-                        .addParent(person, getParentalRelationToChild(getGender()), this);
+                        .setAsParentOfChild(person, getParentalRelationToChild(getGender()), this);
                 break;
         }
     }
